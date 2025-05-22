@@ -13,7 +13,7 @@ class SunTimesRetriever
       data_from_d
     else
       api_data = fetch_from_api
-      # parsed_data = extract_relevant_data(api_data)
+      parsed_data = extract_data(api_data)
       # store_in_db(parsed_data)
       # parsed_data
     end
@@ -59,8 +59,14 @@ class SunTimesRetriever
     raise APIError, "Connection or parse error: #{e.class} - #{e.message}"
   end
 
-  def extract_relevant_data(api_data)
-    # Filtrar sunrise, sunset, golden hour, etc.
+  def extract_data(api_data)
+    api_data["results"].map { |data|
+      {
+        sunrise:     data["sunrise"],
+        sunset:      data["sunset"],
+        golden_hour: data["golden_hour"]
+      }
+    }
   end
 
   def store_in_db(data)
