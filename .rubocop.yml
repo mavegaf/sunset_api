@@ -24,3 +24,6 @@ Layout/EndAlignment:
 
 Layout/FirstParameterIndentation:
   Enabled: true
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
