@@ -1,11 +1,44 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
+sunrise_one:
   sun_event_day: one
-  event_type: MyString
-  event_time: 2025-05-23 11:56:00
+  event_type: sunrise
+  event_time: "06:00"
 
-two:
+sunset_one:
+  sun_event_day: one
+  event_type: sunset
+  event_time: "18:00"
+
+golden_hour_one:
+  sun_event_day: one
+  event_type: golden_hour
+  event_time: "17:30"
+
+sunrise_two:
   sun_event_day: two
-  event_type: MyString
-  event_time: 2025-05-23 11:56:00
+  event_type: sunrise
+  event_time: "06:01"
+
+sunset_two:
+  sun_event_day: two
+  event_type: sunset
+  event_time: "18:01"
+
+golden_hour_two:
+  sun_event_day: two
+  event_type: golden_hour
+  event_time: "17:31"
+
+sunrise_three:
+  sun_event_day: three
+  event_type: sunrise
+  event_time: "06:02"
+
+sunset_three:
+  sun_event_day: three
+  event_type: sunset
+  event_time: "18:02"
+
+golden_hour_three:
+  sun_event_day: three
+  event_type: golden_hour
+  event_time: "17:32"

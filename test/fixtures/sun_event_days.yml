@@ -1,11 +1,14 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  date: 2025-05-23
-  latitude: 9.99
-  longitude: 9.99
+  date: 2024-01-01
+  latitude: 40.7128
+  longitude: -74.0060
 
 two:
-  date: 2025-05-23
-  latitude: 9.99
-  longitude: 9.99
+  date: 2024-01-02
+  latitude: 40.7128
+  longitude: -74.0060
+
+three:
+  date: 2024-01-03
+  latitude: 40.7128
+  longitude: -74.0060
