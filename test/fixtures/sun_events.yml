@@ -1,0 +1,13 @@
+one:
+  date: 2025-05-22
+  latitude: 9.99
+  longitude: 9.99
+  event_type: sunrise
+  event_time: 07:28:00
+
+two:
+  date: 2025-05-22
+  latitude: 9.99
+  longitude: 9.99
+  event_type: sunset
+  event_time: 17:00:00

@@ -1,9 +1,9 @@
 class SunTimesController < ApplicationController
   def index
-    lat = params.require(:lat)
-    lng = params.require(:lng)
+    lat        = params.require(:lat)
+    lng        = params.require(:lng)
     date_start = params.require(:date_start)
-    date_end = params.require(:date_end)
+    date_end   = params.require(:date_end)
 
     data = SunTimesRetriever.new(
       lat: lat,

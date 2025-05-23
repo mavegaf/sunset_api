@@ -1,0 +1,2 @@
+class SunEvent < ApplicationRecord
+end
