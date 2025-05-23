@@ -13,8 +13,6 @@ class SunTimesRetriever
       api_data = fetch_from_api
       parsed_data = extract_data(api_data)
       store_in_db(parsed_data)
-    else
-      puts 'TENGO LOS DATOS EN DB'
     end
 
     data_from_db
