@@ -10,16 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_22_192322) do
-  create_table "sun_events", force: :cascade do |t|
-    t.date "date", null: false
-    t.decimal "latitude", precision: 8, scale: 5, null: false
-    t.decimal "longitude", precision: 8, scale: 5, null: false
-    t.time "sunrise"
-    t.time "sunset"
-    t.time "golden_hour"
+ActiveRecord::Schema[8.0].define(version: 2025_05_23_155600) do
+  create_table "sun_event_days", force: :cascade do |t|
+    t.date "date"
+    t.decimal "latitude"
+    t.decimal "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["date", "latitude", "longitude"], name: "index_sun_events_on_date_and_latitude_and_longitude", unique: true
+    t.index ["date", "latitude", "longitude"], name: "index_sun_event_days_on_date_and_latitude_and_longitude", unique: true
   end
+
+  create_table "sun_event_times", force: :cascade do |t|
+    t.integer "sun_event_day_id", null: false
+    t.string "event_type"
+    t.time "event_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sun_event_day_id"], name: "index_sun_event_times_on_sun_event_day_id"
+  end
+
+  add_foreign_key "sun_event_times", "sun_event_days"
 end

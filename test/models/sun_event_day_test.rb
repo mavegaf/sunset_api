@@ -1,6 +1,6 @@
 require "test_helper"
 
-class SunEventTest < ActiveSupport::TestCase
+class SunEventDayTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

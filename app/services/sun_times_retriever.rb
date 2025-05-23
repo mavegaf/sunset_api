@@ -13,6 +13,8 @@ class SunTimesRetriever
       api_data = fetch_from_api
       parsed_data = extract_data(api_data)
       store_in_db(parsed_data)
+    else
+      puts 'TENGO LOS DATOS EN DB'
     end
 
     data_from_db
@@ -23,7 +25,7 @@ class SunTimesRetriever
     def data_exists_in_db?
       # +1 because includes both dates
       expected_days = (Date.parse(@date_end) - Date.parse(@date_start)).to_i + 1
-      actual_days = SunEvent.where(
+      actual_days = SunEventDay.where(
         latitude: @lat,
         longitude: @lng,
         date: @date_start..@date_end
@@ -33,21 +35,23 @@ class SunTimesRetriever
     end
 
   def data_from_db
-    SunEvent
+    SunEventDay
+      .includes(:sun_event_times)
       .where(
         latitude: @lat,
         longitude: @lng,
         date: @date_start..@date_end
       )
-      .select(:date, :sunrise, :sunset, :golden_hour)
-      .map { |event|
+      .map do |day|
+        times = day.sun_event_times.index_by(&:event_type)
+
         {
-          date: event.date,
-          sunrise: event.sunrise&.strftime('%I:%M:%S %p'),
-          sunset: event.sunset&.strftime('%I:%M:%S %p'),
-          golden_hour: event.golden_hour&.strftime('%I:%M:%S %p')
+          date:        day.date,
+          sunrise:     times['sunrise']&.event_time&.strftime('%I:%M:%S %p'),
+          sunset:      times['sunset']&.event_time&.strftime('%I:%M:%S %p'),
+          golden_hour: times['golden_hour']&.event_time&.strftime('%I:%M:%S %p')
         }
-      }
+      end
   end
 
   def fetch_from_api
@@ -91,19 +95,25 @@ class SunTimesRetriever
   end
 
   def store_in_db(results)
-    # some of the data could already be in the DB, only add the new ones
-    # The table will not be normalized: sunrise, sunset and golden_hour could be null
-    # since I'm interested in storing all the dates that I have queried even if there is
-    # no data
     results.each do |data|
-      SunEvent.find_or_create_by!(
-        date:         data[:date],
-        latitude:     @lat,
-        longitude:    @lng,
+      day = SunEventDay.find_or_create_by!(
+        date:      data[:date],
+        latitude:  @lat,
+        longitude: @lng
+      )
+
+      {
+        sunrise:     data[:sunrise],
+        sunset:      data[:sunset],
+        golden_hour: data[:golden_hour]
+      }.each do |event_type, event_time|
+        next unless event_time
+
+        day.sun_event_times.find_or_create_by!(
+          event_type: event_type.to_s
       ) do |event|
-        event.sunrise     = data[:sunrise]
-        event.sunset      = data[:sunset]
-        event.golden_hour = data[:golden_hour]
+          event.event_time = event_time
+        end
       end
     end
   end
