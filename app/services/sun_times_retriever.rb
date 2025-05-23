@@ -43,9 +43,9 @@ class SunTimesRetriever
       .map { |event|
         {
           date: event.date,
-          sunrise: event.sunrise.strftime('%I:%M:%S %p'),
-          sunset: event.sunset.strftime('%I:%M:%S %p'),
-          golden_hour: event.golden_hour.strftime('%I:%M:%S %p')
+          sunrise: event.sunrise&.strftime('%I:%M:%S %p'),
+          sunset: event.sunset&.strftime('%I:%M:%S %p'),
+          golden_hour: event.golden_hour&.strftime('%I:%M:%S %p')
         }
       }
   end
